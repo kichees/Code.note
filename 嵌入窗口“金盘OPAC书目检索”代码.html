@@ -1,0 +1,14 @@
+<form id="formGcAll" method="post" name="formGcAll" action="http://172.17.160.21:8080/opac/search" target="_blank">
+<input type="hidden" name="tag" value="search" />
+<input type="hidden" name="subtag" value="simsearch" />
+<input type="hidden" name="corename" value="" /><!-- "":全部馆藏 Book:馆藏图书 Journal:馆藏期刊 NonBook:非书资料 -->
+<input type="hidden" name="gcbook" value="yes" />
+<input type="hidden" name="exactSearch" value="no" />
+<DIV class="frmbody">
+<DIV class="searchtitle"> </DIV>
+<DIV class="searchbody">
+<DIV class="searchinputs">
+<DIV class="searchinput"><INPUT type="text" placeholder="请输入检索词...." name="q" onfocus="this.select();"> </DIV>
+<DIV class="searchvolumn"><SELECT name="field"> <OPTION selected value="title">题名</OPTION> <OPTION value="callNumberSearch">索书号</OPTION> <OPTION value="publisher">出版者</OPTION> <OPTION value="creatorSearch">责任者</OPTION> <OPTION value="isbnSearch">标准编码</OPTION> <OPTION value="丛编项名">丛编项名</OPTION> <OPTION value="语种">语种</OPTION></SELECT> </DIV></DIV>
+<DIV class="searchbutton"><INPUT value="查询" type="submit"> </DIV>
+<DIV class="clearfix"></DIV></DIV></DIV></FORM></DIV>
