@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<meta name="renderer" content="webkit"/>
+<!--默认使用极速模式，作用于chrome内核的双核浏览器-->
+<meta name="force-rendering" content="webkit"/>
+<!--默认使用极速模式，作用于其他双核浏览器-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<script>/*@cc_on window.location.href="http://support.dmeng.net/upgrade-your-browser.html?referrer="+encodeURIComponent(window.location.href); @*/</script>
+<!--@cc_on 是 IE10 及更旧版IE特有的条件编译语句，用来判断是否除 IE11 的其他IE版本。代码将IE10及以下版本的用户跳转到IE浏览器升级页。-->
+<title>浏览器内核控制代码片段</title>
+</head>
+
+<body>
+<h1>这是一段浏览器缓存清理以及内核控制代码片段</h1>
+<p>以上是一个完整的急速兼容模式代码</p>
+<p>需要注意的是，这个meta并非所有环境都通用，为了兼容所有双核浏览器及所有运行环境，建议使用这段代码。</p>
+<p>默认使用极速模式，作用于360浏览器、QQ浏览器等国产双核浏览器：</p>
+<meta name="renderer" content="webkit"/>
+<p>默认使用极速模式，作用于其他双核浏览器：</p>
+<meta name="force-rendering" content="webkit"/>
+<p>如果有安装 Google Chrome Frame 插件则默认使用Chromium内核（也就是极速模式内核），否则强制本机支持的最高版本IE内核，作用于IE浏览器：</p>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+<p>以上代码已经令所有双核浏览器默认使用极速模式而非IE模式访问，剩下的IE用户也就寥寥无几了，以下代码将IE10及以下版本的用户跳转到IE浏览器升级页：</p>
+<script>/*@cc_on window.location.href="http://support.dmeng.net/upgrade-your-browser.html?referrer="+encodeURIComponent(window.location.href); @*/</script>
+<p>@cc_on 是 IE10 及更旧版IE特有的条件编译语句，因此可以用来判断是否除 IE11 的其他IE版本。</p>
+<br>
+
+<h1>HTML页面每次打开的时候都清除页面缓存</h1>
+解决办法为：
+<h2>（1）用HTML标签设置HTTP头信息</h2>
+<meta http-equiv="Pragma" content="no-cache">
+<!--header("Cache-Control: no-cache, must-revalidate")-->
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires"  content="0">
+<p>说明：HTTP头信息“Expires”和“Cache-Control”为应用程序服务器提供了一个控制浏览器和代理服务器上缓存的机制。HTTP头信息Expires告诉代理服务器它的缓存页面何时将过期。HTTP1.1规范中新定义的头信息Cache-Control可以通知浏览器不缓存任何页面。当点击后退按钮时，浏览器重新访问服务器已获取页面。如下是使用Cache-Control的基本方法：</p>
+<p>1)no-cache:强制缓存从服务器上获取新的页面</p>
+<p>2)no-store: 在任何环境下缓存不保存任何页面</p>
+<p>HTTP1.0规范中的Pragma:no-cache等同于HTTP1.1规范中的Cache-Control:no-cache，同样可以包含在头信息中。</p>
+<h2>（2）在需要打开的url后面增加一个随机的参数：</h2>
+<p>增加参数前：url=test/test.jsp</p>
+<p>增加参数后：url=test/test.jsp?ranparam=random()</p>
+<p>说明：因为每次请求的url后面的参数不一样，相当于请求的是不同的页面，用这样的方法来曲线救国，清除缓存</p>
+<p>网页的缓存是由HTTP消息头中的“Cache-control”来控制的，常见的取值有private、 no-cache、max-age、must-revalidate等，默认为private。其作用根据不同的重新浏览方式分为以下几种情况：</p>
+<p>（1） 打开新窗口如果指定cache-control的值为private、no-cache、must-revalidate，那么打开新窗口访问时都会重新访问服务器。而如果指定了max-age值，那么在此值内的时间里就不会重新访问服务器，例如： Cache-control: max-age=5 表示当访问此网页后的5秒内再次访问不会去服务器</p>
+<p>（2） 在地址栏回车如果值为private或must-revalidate（和网上说的不一样），则只有第一次访问时会访问服务器，以后就不再访问。如果值为no-cache，那么每次都会访问。如果值为 max-age，则在过期之前不会重复访问。</p>
+<p>（3） 按后退按扭如果值为private、must-revalidate、max-age，则不会重访问，而如果为no-cache，则每次都重复访问</p>
+<p>（4） 按刷新按扭无论为何值，都会重复访问 当指定Cache-control值为“no-cache”时，访问此页面不会在Internet临时文章夹留下页面备份。另外，通过指定“Expires”值也会影响到缓存</p>
+<br>
+
+<h1>浏览器内核控制标签meta说明</h1>
+<p>由于众所周知的原因，国内的主流浏览器都是双核浏览器：基于Webkit的内核用于常用网站的高速浏览，基于IE的内核主要用于部分网银、政府、办公系统等网站的正常使用。</p>
+<h2>代码示例</h2>
+<p>浏览器默认内核的指定只需在head标签中添加一行代码即可：</p>
+<p>若页面需默认用极速核，增加标签：<meta name="renderer" content="webkit"></p>
+<p>若页面需默认用ie兼容内核，增加标签：<meta name="renderer" content="ie-comp"></p>
+<p>若页面需默认用ie标准内核，增加标签：<meta name="renderer" content="ie-stand"></p>
+<p>content的取值为webkit,ie-comp,ie-stand之一，区分大小写，分别代表用webkit内核，IE兼容内核，IE标准内核。</p>
+
+</body>
+</html>
